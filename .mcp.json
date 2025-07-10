@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--project-ref=mxvdvarvgpzsaakrnkax"
+      ],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_a410b5a3552fcabd6d6e51c5f86511d6d6013b81"
+      }
+    },
+    "vibe31-local": {
+      "url": "http://localhost:3000/api/mcp"
+    },
+    "vibe31-production": {
+      "url": "https://vibe31.com/api/mcp"
+    }
+  }
+}
