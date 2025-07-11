@@ -14,64 +14,61 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { createClient } from '@/lib/supabase/client'
 
-const loginSchema = z.object({
+const signupSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
-  password: z.string().optional(),
+  fullName: z.string().min(2, 'Name must be at least 2 characters'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
-type LoginValues = z.infer<typeof loginSchema>
+type SignupValues = z.infer<typeof signupSchema>
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isGithubLoading, setIsGithubLoading] = useState(false)
-  const [usePassword, setUsePassword] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   
   const supabase = createClient()
 
-  const form = useForm<LoginValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<SignupValues>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
+      fullName: '',
       password: '',
     },
   })
 
-  async function onSubmit(values: LoginValues) {
+  async function onSubmit(values: SignupValues) {
     setIsLoading(true)
     setMessage(null)
 
     try {
-      if (usePassword && values.password) {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: values.email,
-          password: values.password,
-        })
-
-        if (error) {
-          setMessage({ type: 'error', text: error.message })
-        } else if (data.user) {
-          router.push('/dashboard')
-        }
-      } else {
-        const { error } = await supabase.auth.signInWithOtp({
-          email: values.email,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+      const { data, error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        options: {
+          data: {
+            full_name: values.fullName,
           },
-        })
+        },
+      })
 
-        if (error) {
-          setMessage({ type: 'error', text: error.message })
-        } else {
-          setMessage({ 
-            type: 'success', 
-            text: 'Check your email for the magic link to sign in!' 
-          })
-          form.reset()
-        }
+      if (error) {
+        setMessage({ type: 'error', text: error.message })
+      } else if (data.user) {
+        // User record and credits will be created automatically by database trigger
+        setMessage({ 
+          type: 'success', 
+          text: 'Account created! Check your email to confirm your account.' 
+        })
+        form.reset()
+        
+        // Redirect to login after 3 seconds
+        setTimeout(() => {
+          router.push('/login?message=Check your email to confirm your account')
+        }, 3000)
       }
     } catch (error) {
       setMessage({ 
@@ -83,7 +80,7 @@ export default function LoginPage() {
     }
   }
 
-  async function handleOAuthLogin(provider: 'google' | 'github') {
+  async function handleOAuthSignup(provider: 'google' | 'github') {
     const setLoading = provider === 'google' ? setIsGoogleLoading : setIsGithubLoading
     setLoading(true)
     setMessage(null)
@@ -113,16 +110,16 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <Card className="w-full max-w-md border-gray-200">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-3xl font-black text-center text-black">Welcome back</CardTitle>
+          <CardTitle className="text-3xl font-black text-center text-black">Create an account</CardTitle>
           <CardDescription className="text-center text-gray-600">
-            Sign in to your account to continue
+            Start your journey with 100 free credits
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <Button
               variant="outline"
-              onClick={() => handleOAuthLogin('google')}
+              onClick={() => handleOAuthSignup('google')}
               disabled={isGoogleLoading || isGithubLoading || isLoading}
               className="border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             >
@@ -135,7 +132,7 @@ export default function LoginPage() {
             </Button>
             <Button
               variant="outline"
-              onClick={() => handleOAuthLogin('github')}
+              onClick={() => handleOAuthSignup('github')}
               disabled={isGoogleLoading || isGithubLoading || isLoading}
               className="border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             >
@@ -163,6 +160,23 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="John Doe"
+                        disabled={isLoading || isGoogleLoading || isGithubLoading}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -179,26 +193,24 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              {usePassword && (
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your password"
-                          type="password"
-                          disabled={isLoading || isGoogleLoading || isGithubLoading}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Create a strong password"
+                        type="password"
+                        disabled={isLoading || isGoogleLoading || isGithubLoading}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button 
                 type="submit" 
                 className="w-full bg-black hover:bg-gray-800 text-white"
@@ -207,25 +219,12 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {usePassword ? 'Signing in...' : 'Sending magic link...'}
+                    Creating account...
                   </>
                 ) : (
-                  <>
-                    <Mail className="mr-2 h-4 w-4" />
-                    {usePassword ? 'Sign in' : 'Sign in with Magic Link'}
-                  </>
+                  'Create Account'
                 )}
               </Button>
-              <div className="text-center">
-                <Button
-                  type="button"
-                  variant="link"
-                  onClick={() => setUsePassword(!usePassword)}
-                  className="text-sm text-gray-600 hover:text-black"
-                >
-                  {usePassword ? 'Use magic link instead' : 'Sign in with password'}
-                </Button>
-              </div>
             </form>
           </Form>
 
@@ -243,14 +242,17 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-sm text-center text-gray-600">
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-black hover:underline font-medium">
-              Sign up
+            Already have an account?{' '}
+            <Link href="/login" className="text-black hover:underline font-medium">
+              Sign in
             </Link>
           </div>
-          <Link href="/" className="text-sm text-gray-600 hover:text-black">
-            Back to homepage
-          </Link>
+          <div className="text-xs text-center text-gray-500 max-w-sm">
+            By signing up, you agree to our{' '}
+            <Link href="/terms" className="underline hover:text-black">Terms of Service</Link>
+            {' '}and{' '}
+            <Link href="/privacy" className="underline hover:text-black">Privacy Policy</Link>
+          </div>
         </CardFooter>
       </Card>
     </div>
