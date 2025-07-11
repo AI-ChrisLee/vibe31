@@ -2,11 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// Helper function to get Supabase client
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase environment variables')
+  }
+  
+  return createClient(supabaseUrl, supabaseServiceKey)
+}
 
 // Validation schema
 const waitlistSchema = z.object({
@@ -17,6 +23,7 @@ const waitlistSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = getSupabaseClient()
     const body = await req.json()
     
     // Validate input
@@ -98,6 +105,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
+    const supabase = getSupabaseClient()
     // Check for admin authentication (basic auth for now)
     const authHeader = req.headers.get('authorization')
     if (!authHeader || authHeader !== `Bearer ${process.env.ADMIN_API_KEY}`) {
