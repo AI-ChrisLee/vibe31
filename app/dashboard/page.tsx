@@ -65,7 +65,7 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-4xl font-black text-black">Welcome back, {firstName}!</h1>
         <p className="text-gray-600 mt-2 text-lg">
-          Here's what's happening with your marketing today.
+          Here&apos;s what&apos;s happening with your marketing today.
         </p>
       </div>
 

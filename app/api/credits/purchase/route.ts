@@ -66,7 +66,7 @@ export async function POST(request: Request) {
       credits: updatedCredits,
       message: `Successfully added ${selectedPackage.credits} credits to your account!`
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ 
       error: 'Failed to process purchase' 
     }, { status: 500 })

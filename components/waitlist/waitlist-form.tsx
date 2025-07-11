@@ -123,7 +123,7 @@ export function WaitlistForm({ size = 'default' }: WaitlistFormProps) {
                 />
 
                 <div className="space-y-3">
-                  <Label>I'm interested in:</Label>
+                  <Label>I&apos;m interested in:</Label>
                   {features.map((feature) => (
                     <FormField
                       key={feature.id}
@@ -187,9 +187,9 @@ export function WaitlistForm({ size = 'default' }: WaitlistFormProps) {
         ) : (
           <div className="text-center py-8">
             <CheckCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-            <DialogTitle className="mb-2">You're on the list!</DialogTitle>
+            <DialogTitle className="mb-2">You&apos;re on the list!</DialogTitle>
             <DialogDescription className="text-base">
-              You're #{position} on our waitlist. We'll email you as soon as we launch.
+              You&apos;re #{position} on our waitlist. We&apos;ll email you as soon as we launch.
             </DialogDescription>
             <Button
               variant="outline"

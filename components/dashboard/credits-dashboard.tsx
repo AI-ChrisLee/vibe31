@@ -17,7 +17,7 @@ interface Credits {
   reset_date: string
 }
 
-export function CreditsDashboard({ userId }: { userId: string }) {
+export function CreditsDashboard() {
   const [credits, setCredits] = useState<Credits | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

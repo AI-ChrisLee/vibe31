@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { createMcpHandler } from '@vercel/mcp-adapter';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createAdminClient } from '@supabase/supabase-js';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -206,11 +205,17 @@ const handler = createMcpHandler(
             };
           }
           
+          return {
+            content: [{
+              type: 'text',
+              text: '❌ Invalid action specified'
+            }],
+          };
         } catch (error) {
           return {
             content: [{
               type: 'text',
-              text: `❌ Error: ${error.message}`
+              text: `❌ Error: ${error instanceof Error ? error.message : 'Unknown error'}`
             }],
           };
         }
@@ -240,8 +245,8 @@ const handler = createMcpHandler(
       'marketing_templates',
       'Access pre-built marketing templates',
       async () => ({
-        content: [{
-          type: 'text',
+        contents: [{
+          uri: 'marketing-templates.json',
           text: JSON.stringify({
             templates: [
               { id: 'webinar-funnel', name: 'Webinar Funnel Template', pages: 5 },
@@ -250,7 +255,7 @@ const handler = createMcpHandler(
               { id: 'lead-magnet', name: 'Lead Magnet Funnel', pages: 3 }
             ]
           }, null, 2)
-        }],
+        }]
       })
     );
 
@@ -259,9 +264,11 @@ const handler = createMcpHandler(
       'marketing_assistant',
       'Interactive marketing assistant for natural language commands',
       async () => ({
-        content: [{
-          type: 'text',
-          text: `You are Vibe31's AI Marketing Assistant. You help users create marketing content, manage campaigns, and analyze performance using natural language commands.
+        messages: [{
+          role: 'assistant',
+          content: {
+            type: 'text',
+            text: `You are Vibe31's AI Marketing Assistant. You help users create marketing content, manage campaigns, and analyze performance using natural language commands.
 
 Available commands:
 - "Create a landing page for [product]"
@@ -272,16 +279,11 @@ Available commands:
 - "Show conversion analytics for this month"
 
 How can I help you with your marketing today?`
-        }],
+          }
+        }]
       })
     );
-  },
-  {
-    name: 'vibe31-marketing-assistant',
-    version: '1.0.0',
-    description: 'AI-powered marketing assistant with natural language interface',
-  },
-  { basePath: '/api' },
+  }
 );
 
 export { handler as GET, handler as POST, handler as DELETE };

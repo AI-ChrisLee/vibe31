@@ -1,6 +1,5 @@
 import { createMcpHandler } from "@vercel/mcp-adapter";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
 
 const handler = createMcpHandler(
   (server) => {
@@ -49,7 +48,7 @@ const handler = createMcpHandler(
         product_context: z.string().describe("Brief description of your product/service"),
         tone: z.enum(["professional", "friendly", "casual", "urgent"]).optional(),
       },
-      async ({ sequence_type, num_emails, product_context, tone }) => {
+      async ({ sequence_type, num_emails, tone }) => {
         const emails = [];
         for (let i = 1; i <= num_emails; i++) {
           emails.push({
@@ -105,7 +104,7 @@ const handler = createMcpHandler(
         primary_keyword: z.string().describe("Main keyword to target"),
         current_content: z.string().optional().describe("Existing content to optimize"),
       },
-      async ({ content_type, primary_keyword, current_content }) => {
+      async ({ content_type, primary_keyword }) => {
         const recommendations = {
           title: `Optimized Title with ${primary_keyword}`,
           meta_description: `Compelling meta description including ${primary_keyword}...`,
@@ -158,9 +157,11 @@ const handler = createMcpHandler(
       "marketing_coach",
       "Get personalized marketing advice and strategies",
       async () => ({
-        content: [{
-          type: "text",
-          text: `I'm your AI Marketing Coach from Vibe31. I can help you with:
+        messages: [{
+          role: "assistant",
+          content: {
+            type: "text",
+            text: `I'm your AI Marketing Coach from Vibe31. I can help you with:
 
 📝 Content Creation
 - Landing pages that convert
@@ -177,8 +178,9 @@ const handler = createMcpHandler(
 - A/B testing ideas
 - Customer acquisition
 
-What marketing challenge can I help you solve today?`,
-        }],
+What marketing challenge can I help you solve today?`
+          }
+        }]
       })
     );
 
@@ -186,9 +188,11 @@ What marketing challenge can I help you solve today?`,
       "brand_voice_generator",
       "Create a consistent brand voice and messaging framework",
       async () => ({
-        content: [{
-          type: "text",
-          text: `Let's define your unique brand voice! I'll help you create:
+        messages: [{
+          role: "assistant",
+          content: {
+            type: "text",
+            text: `Let's define your unique brand voice! I'll help you create:
 
 🎯 Brand Personality
 - Tone and style guidelines
@@ -205,8 +209,9 @@ What marketing challenge can I help you solve today?`,
 - Example phrases
 - Style preferences
 
-Tell me about your brand and target audience to get started.`,
-        }],
+Tell me about your brand and target audience to get started.`
+          }
+        }]
       })
     );
 
@@ -215,8 +220,8 @@ Tell me about your brand and target audience to get started.`,
       "marketing_templates",
       "Access proven marketing templates and frameworks",
       async () => ({
-        content: [{
-          type: "text",
+        contents: [{
+          uri: "marketing-templates.json",
           text: JSON.stringify({
             categories: {
               landing_pages: [
@@ -244,8 +249,8 @@ Tell me about your brand and target audience to get started.`,
                 "Instagram Story Ads"
               ]
             }
-          }, null, 2),
-        }],
+          }, null, 2)
+        }]
       })
     );
 
@@ -253,8 +258,8 @@ Tell me about your brand and target audience to get started.`,
       "marketing_metrics",
       "Key marketing metrics and benchmarks by industry",
       async () => ({
-        content: [{
-          type: "text",
+        contents: [{
+          uri: "marketing-metrics.json",
           text: JSON.stringify({
             email_marketing: {
               open_rate: { average: "21.33%", excellent: ">25%" },
@@ -270,20 +275,10 @@ Tell me about your brand and target audience to get started.`,
               engagement_rate: { average: "1.5%", excellent: ">3%" },
               click_through_rate: { average: "0.9%", excellent: ">2%" }
             }
-          }, null, 2),
-        }],
+          }, null, 2)
+        }]
       })
     );
-  },
-  {
-    name: "vibe31-marketing-mcp",
-    version: "1.0.0",
-    description: "AI-powered marketing assistant with natural language interface",
-  },
-  {
-    redisUrl: process.env.REDIS_URL,
-    basePath: "/api",
-  }
-);
+  });
 
 export { handler as GET, handler as POST };

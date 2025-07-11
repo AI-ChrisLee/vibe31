@@ -73,7 +73,7 @@ export default function LoginPage() {
           form.reset()
         }
       }
-    } catch (error) {
+    } catch {
       setMessage({ 
         type: 'error', 
         text: 'Something went wrong. Please try again.' 
@@ -100,7 +100,7 @@ export default function LoginPage() {
         setMessage({ type: 'error', text: error.message })
         setLoading(false)
       }
-    } catch (error) {
+    } catch {
       setMessage({ 
         type: 'error', 
         text: 'Something went wrong. Please try again.' 

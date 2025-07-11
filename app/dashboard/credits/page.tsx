@@ -17,7 +17,7 @@ import {
 import { format } from 'date-fns'
 
 export default function CreditsPage() {
-  const { user } = useAuth()
+  useAuth()
   const { credits, loading } = useCredits()
 
   if (loading) {
@@ -130,7 +130,7 @@ export default function CreditsPage() {
             <div className="flex items-center gap-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
               <AlertCircle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                You've used {Math.round(creditPercentage)}% of your credits. Consider upgrading your plan.
+                You&apos;ve used {Math.round(creditPercentage)}% of your credits. Consider upgrading your plan.
               </p>
             </div>
           )}

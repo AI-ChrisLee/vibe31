@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { Github, Mail, Chrome, Loader2 } from 'lucide-react'
+import { Github, Chrome, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -70,7 +70,7 @@ export default function SignupPage() {
           router.push('/login?message=Check your email to confirm your account')
         }, 3000)
       }
-    } catch (error) {
+    } catch {
       setMessage({ 
         type: 'error', 
         text: 'Something went wrong. Please try again.' 
@@ -97,7 +97,7 @@ export default function SignupPage() {
         setMessage({ type: 'error', text: error.message })
         setLoading(false)
       }
-    } catch (error) {
+    } catch {
       setMessage({ 
         type: 'error', 
         text: 'Something went wrong. Please try again.' 

@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = await createClient()
     
     // Try to get the current user (will be null if not logged in)
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser()
     
     return NextResponse.json({
       success: true,
