@@ -44,7 +44,7 @@ Your mom was right—pay attention to details. Especially with AI. 10 minutes of
 **Hook:** "I wasted 2 weeks copy-pasting code until I found this hidden feature nobody talks about..."
 
 **[Introduction - 0:00-0:10]**
-For two weeks, I was copy-pasting between Cursor and Supabase like a caveman. Then I discovered MCP. Game. Changer.
+Day 1 of building Vibe33, I was copy-pasting between Cursor and Supabase like a caveman. Then I discovered MCP. Game. Changer.
 
 **[Development - 0:10-0:35]**
 Picture this: Me, switching tabs 100 times a day. Cursor. Supabase. Copy schema. Paste. Test. Error. Repeat. Burning hours on what should take minutes. And nobody—NOBODY—told me about MCP. Model Context Protocol. It connects your AI directly to Supabase.

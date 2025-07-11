@@ -11,10 +11,12 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
-      return NextResponse.redirect(new URL(next, requestUrl.origin))
+      // Use absolute URL for redirect
+      const redirectUrl = new URL(next, requestUrl.origin)
+      return NextResponse.redirect(redirectUrl.toString())
     }
   }
 
   // Return the user to an error page with instructions
-  return NextResponse.redirect(new URL('/auth/error', requestUrl.origin))
+  return NextResponse.redirect(new URL('/auth/error', requestUrl.origin).toString())
 }

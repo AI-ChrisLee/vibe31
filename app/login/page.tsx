@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { createClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase-browser'
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -22,12 +22,12 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isGithubLoading, setIsGithubLoading] = useState(false)
   const [usePassword, setUsePassword] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const supabase = createClient()
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -43,7 +43,6 @@ export default function LoginPage() {
 
     try {
       if (usePassword && values.password) {
-        const supabase = createClient()
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
@@ -52,10 +51,12 @@ export default function LoginPage() {
         if (error) {
           setMessage({ type: 'error', text: error.message })
         } else if (data.user) {
-          router.push('/dashboard')
+          console.log('Login successful, user:', data.user.email)
+          setMessage({ type: 'success', text: 'Login successful! Redirecting...' })
+          // Force redirect with window.location
+          window.location.href = '/dashboard'
         }
       } else {
-        const supabase = createClient()
         const { error } = await supabase.auth.signInWithOtp({
           email: values.email,
           options: {
@@ -89,7 +90,6 @@ export default function LoginPage() {
     setMessage(null)
 
     try {
-      const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

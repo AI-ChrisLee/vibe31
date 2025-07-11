@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/components/auth/auth-provider'
+import { useAuth } from '@/components/providers/AuthProvider'
 import { useCredits } from '@/lib/hooks/use-credits'
 import { 
   Home, 
@@ -13,7 +13,8 @@ import {
   BarChart3, 
   Settings,
   LogOut,
-  Loader2
+  Loader2,
+  Terminal
 } from 'lucide-react'
 
 export default function DashboardNav() {
@@ -22,8 +23,8 @@ export default function DashboardNav() {
   const { credits, loading: creditsLoading } = useCredits()
 
   const navItems = [
-    { href: '/dashboard', label: 'Home', icon: Home },
-    { href: '/dashboard/assistant', label: 'AI Assistant', icon: MessageSquare },
+    { href: '/dashboard', label: 'Dashboard', icon: Home },
+    { href: '/dashboard/clients', label: 'Clients', icon: MessageSquare },
     { href: '/dashboard/funnels', label: 'Funnels', icon: FileText },
     { href: '/dashboard/crm', label: 'CRM', icon: BarChart3 },
     { href: '/dashboard/credits', label: 'Credits', icon: CreditCard },
@@ -41,7 +42,7 @@ export default function DashboardNav() {
             <div className="hidden md:flex items-center space-x-6">
               {navItems.map((item) => {
                 const Icon = item.icon
-                const isActive = pathname === item.href
+                const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
                 return (
                   <Link
                     key={item.href}

@@ -13,7 +13,9 @@
 "Day 1 is already productive. Waitlist site? Live. Authentication? Working. Database? Connected. My stack: Cursor for coding, Claude Code for AI pair programming, Supabase for backend, Vercel for hosting, Resend for emails. Everything modern agencies need, built with modern tools."
 
 **[1:10-1:30] The Process**
-"My process is simple: Idea → PRD → Waitlist → Database → Backend → Polish. Today I knocked out waitlist and auth. Tomorrow, I'm diving into the core AI features. The goal? Agencies can say 'Create 10 landing pages for Nike' and it happens. No learning curve. Just results."
+"My process is simple: Idea → PRD → Waitlist → UI → Database → Backend → Polish. Today I knocked out waitlist and auth. 
+
+Tomorrow, I'm diving into the core AI features. The goal? Agencies can say 'Create 2 landing pages for Nike and test the angles. and it happens. No learning curve. Just results."
 
 **[1:30-1:50] The 12-Hour Discipline**
 "Here's my schedule: 6-10am, 12-4pm, 6-10pm. Every single day. 12 hours of focused building. Why? Because volume beats talent. Ship daily or die trying. I learned this running my agency—consistency compounds faster than anything else."

@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import { useAuth } from '@/components/auth/auth-provider'
+import { createClient } from '@/lib/supabase-browser'
+import { useAuth } from '@/components/providers/AuthProvider'
 
 type Credits = {
   id: string
@@ -19,6 +19,7 @@ export function useCredits() {
   const [credits, setCredits] = useState<Credits | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const supabase = createClient()
 
   useEffect(() => {
     if (!user) {
@@ -27,8 +28,6 @@ export function useCredits() {
       return
     }
 
-    const supabase = createClient()
-    
     const fetchCredits = async () => {
       try {
         const { data, error } = await supabase
@@ -89,7 +88,6 @@ export function useCredits() {
     if (!user || !credits) return false
 
     try {
-      const supabase = createClient()
       const { error } = await supabase
         .from('credits')
         .update({ used_credits: credits.used_credits + amount })
