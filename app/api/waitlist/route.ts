@@ -14,11 +14,9 @@ function getSupabaseClient() {
   return createClient(supabaseUrl, supabaseServiceKey)
 }
 
-// Validation schema
+// Validation schema - simplified for just email
 const waitlistSchema = z.object({
   email: z.string().email(),
-  interestedFeatures: z.array(z.string()).optional().default([]),
-  referralCode: z.string().optional(),
 })
 
 export async function POST(req: NextRequest) {
@@ -27,35 +25,31 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     
     // Validate input
-    const { email, interestedFeatures, referralCode } = waitlistSchema.parse(body)
+    const { email } = waitlistSchema.parse(body)
     
     // Check if email already exists
-    const { data: existing } = await supabase
+    const { data: existing, error: checkError } = await supabase
       .from('waitlist')
-      .select('id')
+      .select('id, position')
       .eq('email', email)
-      .single()
+      .maybeSingle()
     
-    if (existing) {
+    if (checkError) {
+      console.error('Error checking existing email:', checkError)
       return NextResponse.json(
-        { message: 'Email already on waitlist' },
-        { status: 400 }
+        { error: 'Failed to check waitlist' },
+        { status: 500 }
       )
     }
     
-    // Prepare metadata
-    const metadata: any = {}
-    if (referralCode) {
-      // Check if referral code exists
-      const { data: referrer } = await supabase
-        .from('waitlist')
-        .select('id')
-        .eq('referral_code', referralCode)
-        .single()
-      
-      if (referrer) {
-        metadata.referred_by = referralCode
-      }
+    if (existing) {
+      return NextResponse.json(
+        { 
+          error: 'Email already on waitlist',
+          position: existing.position 
+        },
+        { status: 400 }
+      )
     }
     
     // Insert new waitlist entry
@@ -63,26 +57,20 @@ export async function POST(req: NextRequest) {
       .from('waitlist')
       .insert({
         email,
-        interested_features: interestedFeatures,
-        metadata,
       })
-      .select('position, referral_code')
+      .select('position')
       .single()
     
     if (error) {
-      console.error('Supabase error:', error)
+      console.error('Supabase insert error:', error)
       return NextResponse.json(
-        { message: 'Failed to join waitlist' },
+        { error: 'Failed to join waitlist. Please try again.' },
         { status: 500 }
       )
     }
     
-    // TODO: Send welcome email with position and referral code
-    // await sendWelcomeEmail(email, data.position, data.referral_code)
-    
     return NextResponse.json({
       position: data.position,
-      referralCode: data.referral_code,
       message: 'Successfully joined waitlist',
     })
     
@@ -91,13 +79,20 @@ export async function POST(req: NextRequest) {
     
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { message: 'Invalid input', errors: error.issues },
+        { error: 'Invalid email address' },
         { status: 400 }
       )
     }
     
+    if (error instanceof Error && error.message === 'Missing Supabase environment variables') {
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      )
+    }
+    
     return NextResponse.json(
-      { message: 'Internal server error' },
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }
