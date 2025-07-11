@@ -6,9 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import { Roadmap } from '@/components/landing/roadmap'
-import Link from 'next/link'
-
-export function HomePageClient({ isAuthenticated }: { isAuthenticated: boolean }) {
+export function HomePageClient() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -117,35 +115,6 @@ export function HomePageClient({ isAuthenticated }: { isAuthenticated: boolean }
             <Check className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>Launch July 24, 2025</span>
           </div>
-        </div>
-        
-        {/* Auth Links */}
-        <div 
-          className={`mt-8 flex items-center justify-center gap-4 transition-all duration-700 delay-[700ms] ${
-            mounted ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          {isAuthenticated ? (
-            <Link href="/dashboard">
-              <Button size="lg" variant="outline" className="font-medium">
-                Go to Dashboard
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          ) : (
-            <>
-              <Link href="/login">
-                <Button size="lg" variant="outline" className="font-medium">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/signup">
-                <Button size="lg" className="bg-black hover:bg-gray-800 text-white font-medium">
-                  Get Started
-                </Button>
-              </Link>
-            </>
-          )}
         </div>
         </div>
       </div>
