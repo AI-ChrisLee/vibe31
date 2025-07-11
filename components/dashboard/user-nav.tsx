@@ -14,11 +14,11 @@ interface UserNavProps {
 export function UserNav({ user }: UserNavProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const supabase = createClient()
 
   async function handleSignOut() {
     setIsLoading(true)
     try {
+      const supabase = createClient()
       await supabase.auth.signOut()
       router.push('/')
       router.refresh()

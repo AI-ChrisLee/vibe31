@@ -19,7 +19,6 @@ export function useCredits() {
   const [credits, setCredits] = useState<Credits | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClient()
 
   useEffect(() => {
     if (!user) {
@@ -28,6 +27,8 @@ export function useCredits() {
       return
     }
 
+    const supabase = createClient()
+    
     const fetchCredits = async () => {
       try {
         const { data, error } = await supabase
@@ -82,12 +83,13 @@ export function useCredits() {
     return () => {
       subscription.unsubscribe()
     }
-  }, [user, supabase])
+  }, [user])
 
   const deductCredits = async (amount: number) => {
     if (!user || !credits) return false
 
     try {
+      const supabase = createClient()
       const { error } = await supabase
         .from('credits')
         .update({ used_credits: credits.used_credits + amount })

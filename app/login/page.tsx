@@ -28,8 +28,6 @@ export default function LoginPage() {
   const [isGithubLoading, setIsGithubLoading] = useState(false)
   const [usePassword, setUsePassword] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-  
-  const supabase = createClient()
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -45,6 +43,7 @@ export default function LoginPage() {
 
     try {
       if (usePassword && values.password) {
+        const supabase = createClient()
         const { data, error } = await supabase.auth.signInWithPassword({
           email: values.email,
           password: values.password,
@@ -56,6 +55,7 @@ export default function LoginPage() {
           router.push('/dashboard')
         }
       } else {
+        const supabase = createClient()
         const { error } = await supabase.auth.signInWithOtp({
           email: values.email,
           options: {
@@ -89,6 +89,7 @@ export default function LoginPage() {
     setMessage(null)
 
     try {
+      const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {

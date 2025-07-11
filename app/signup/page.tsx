@@ -28,8 +28,6 @@ export default function SignupPage() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isGithubLoading, setIsGithubLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-  
-  const supabase = createClient()
 
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
@@ -45,6 +43,7 @@ export default function SignupPage() {
     setMessage(null)
 
     try {
+      const supabase = createClient()
       const { data, error } = await supabase.auth.signUp({
         email: values.email,
         password: values.password,
@@ -86,6 +85,7 @@ export default function SignupPage() {
     setMessage(null)
 
     try {
+      const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
