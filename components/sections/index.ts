@@ -1,0 +1,10 @@
+export { HeroSection } from './HeroSection';
+export { SocialProofSection } from './SocialProofSection';
+export { ExpertiseSection } from './ExpertiseSection';
+export { ProblemSection } from './ProblemSection';
+export { ProcessSection } from './ProcessSection';
+export { JourneySection } from './JourneySection';
+export { PricingSection } from './PricingSection';
+export { FAQSection } from './FAQSection';
+export { FinalCTASection } from './FinalCTASection';
+export { Footer } from './Footer';
