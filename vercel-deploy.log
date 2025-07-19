@@ -1,0 +1,20 @@
+Vercel CLI 44.2.12
+Retrieving project…
+Deploying ai-chrislees-projects/vibe31
+Uploading [--------------------] (0.0B/8.8MB)
+Uploading [=====---------------] (2.2MB/8.8MB)
+Uploading [==========----------] (4.4MB/8.8MB)
+Uploading [===============-----] (6.6MB/8.8MB)
+Uploading [====================] (8.8MB/8.8MB)
+Inspect: https://vercel.com/ai-chrislees-projects/vibe31/FoJKD94GQi8RPgSR6EQJDG9Mk9WL [3s]
+Production: https://vibe31-o4urw4b7i-ai-chrislees-projects.vercel.app [3s]
+https://vibe31-o4urw4b7i-ai-chrislees-projects.vercel.appQueued
+2025-07-19T02:36:45.685Z  Running build in Washington, D.C., USA (East) – iad1
+2025-07-19T02:36:45.686Z  Build machine configuration: 2 cores, 8 GB
+2025-07-19T02:36:45.703Z  Retrieving list of deployment files...
+2025-07-19T02:36:46.051Z  Downloading 53 deployment files...
+2025-07-19T02:36:48.323Z  Restored build cache from previous deployment (FUt1MHacP7eQFax6cTXfacqqrds2)
+2025-07-19T02:36:50.563Z  Running "vercel build"
+2025-07-19T02:36:51.084Z  Vercel CLI 44.4.3
+2025-07-19T02:36:51.427Z  Running "install" command: `npm install`...
+Error: Project not found

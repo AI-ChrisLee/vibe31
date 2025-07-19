@@ -1,6 +1,5 @@
 "use client";
 
-import { SectionContainer } from "../shared/SectionContainer";
 
 interface Tool {
   name: string;

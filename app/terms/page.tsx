@@ -37,7 +37,7 @@ export default function TermsOfUse() {
             <h2 className="text-2xl font-black mb-4">Challenge Rules</h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Show up to Thursday office hours</li>
-              <li>• No refunds (if $799 hurts, you're not ready)</li>
+              <li>• No refunds (if $799 hurts, you&apos;re not ready)</li>
               <li>• Complete the weekly builds</li>
               <li>• Share wins AND failures</li>
               <li>• Build first, optimize later</li>
@@ -56,11 +56,11 @@ export default function TermsOfUse() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black mb-4">What You Can't Do</h2>
+            <h2 className="text-2xl font-black mb-4">What You Can&apos;t Do</h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Resell or share your access</li>
               <li>• Spam the community</li>
-              <li>• Ask for "quick calls" or meetings</li>
+              <li>• Ask for &quot;quick calls&quot; or meetings</li>
               <li>• Share content outside the community</li>
               <li>• Skip the weekly builds</li>
             </ul>
@@ -77,7 +77,7 @@ export default function TermsOfUse() {
           <section>
             <h2 className="text-2xl font-black mb-4">No Guarantees</h2>
             <p className="text-muted-foreground mb-4">
-              We don't promise you'll make money. We don't promise you'll quit your job. 
+              We don&apos;t promise you&apos;ll make money. We don&apos;t promise you&apos;ll quit your job. 
               We promise to show you exactly how we build and ship. Your results depend on 
               you actually doing the work.
             </p>
@@ -87,15 +87,15 @@ export default function TermsOfUse() {
             <h2 className="text-2xl font-black mb-4">After the Challenge</h2>
             <p className="text-muted-foreground mb-4">
               You keep lifetime access to all recordings and templates. 
-              No upsells. No "advanced" program. This is everything.
+              No upsells. No &quot;advanced&quot; program. This is everything.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-black mb-4">Disputes</h2>
             <p className="text-muted-foreground mb-4">
-              Got a problem? Email chris@vibe31.com. We'll sort it out like adults. 
-              No lawyers, no drama. If we can't agree, you can cancel and move on.
+              Got a problem? Email chris@vibe31.com. We&apos;ll sort it out like adults. 
+              No lawyers, no drama. If we can&apos;t agree, you can cancel and move on.
             </p>
           </section>
 
@@ -104,7 +104,7 @@ export default function TermsOfUse() {
             <p className="text-muted-foreground">
               This is a 31-day intensive for agency owners ready to 10X their speed. 
               Not a theory course. Not a mastermind. A build-and-ship bootcamp. 
-              If that's you, welcome. If not, keep watching gurus.
+              If that&apos;s you, welcome. If not, keep watching gurus.
             </p>
           </section>
         </div>

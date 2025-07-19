@@ -85,7 +85,7 @@ export function HeroSection() {
                 href="#journey"
                 className="px-8 py-4 border-2 border-foreground font-semibold text-lg rounded-lg hover:bg-foreground hover:text-background transition-colors"
               >
-                See What You'll Build
+                See What You&apos;ll Build
               </Link>
             </div>
           </div>

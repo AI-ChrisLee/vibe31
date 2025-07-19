@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
 
         <div className="prose prose-gray max-w-none space-y-8">
           <section>
-            <h2 className="text-2xl font-black mb-4">We Don't Spy</h2>
+            <h2 className="text-2xl font-black mb-4">We Don&apos;t Spy</h2>
             <p className="text-muted-foreground">
               We collect what we need to run the challenge. Nothing more. 
               No creepy tracking. No selling your data. No BS.
@@ -38,19 +38,19 @@ export default function PrivacyPolicy() {
             <ul className="space-y-2 text-muted-foreground">
               <li>• Email (to send you stuff)</li>
               <li>• Name (to know who you are)</li>
-              <li>• Payment info (processed by Stripe, we don't see your card)</li>
+              <li>• Payment info (processed by Stripe, we don&apos;t see your card)</li>
               <li>• Your weekly builds (to track progress)</li>
               <li>• Discord posts (what you share)</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-2xl font-black mb-4">What We Don't Collect</h2>
+            <h2 className="text-2xl font-black mb-4">What We Don&apos;t Collect</h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Your browsing history</li>
-              <li>• Your location (we don't care where you work from)</li>
+              <li>• Your location (we don&apos;t care where you work from)</li>
               <li>• Third-party tracking cookies</li>
-              <li>• Anything we don't need</li>
+              <li>• Anything we don&apos;t need</li>
             </ul>
           </section>
 
@@ -84,10 +84,10 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-black mb-4">Third Parties</h2>
             <ul className="space-y-2 text-muted-foreground">
-              <li>• <strong>Stripe:</strong> Handles payments (they're legit)</li>
+              <li>• <strong>Stripe:</strong> Handles payments (they&apos;re legit)</li>
               <li>• <strong>Email provider:</strong> Sends course modules</li>
               <li>• <strong>Hosting:</strong> Keeps the site running</li>
-              <li>That's it. No data brokers. No advertisers.</li>
+              <li>That&apos;s it. No data brokers. No advertisers.</li>
             </ul>
           </section>
 
@@ -96,7 +96,7 @@ export default function PrivacyPolicy() {
             <ul className="space-y-2 text-muted-foreground">
               <li>• See what data we have (just ask)</li>
               <li>• Delete your data (just ask)</li>
-              <li>• Export your data (we'll send it)</li>
+              <li>• Export your data (we&apos;ll send it)</li>
               <li>• Tell us to stop emailing (unsubscribe link in every email)</li>
             </ul>
           </section>
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-2xl font-black mb-4">Changes</h2>
             <p className="text-muted-foreground mb-4">
-              If we change this policy, we'll tell you. No sneaky updates. 
+              If we change this policy, we&apos;ll tell you. No sneaky updates. 
               No burying changes in legal speak. Clear communication only.
             </p>
           </section>
@@ -121,7 +121,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-2xl font-black mb-4">Questions?</h2>
             <p className="text-muted-foreground">
               Email chris@vibe31.com. No contact forms. No tickets. 
-              Just email me directly and I'll answer.
+              Just email me directly and I&apos;ll answer.
             </p>
           </section>
         </div>

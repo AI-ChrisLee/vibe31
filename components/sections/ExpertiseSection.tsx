@@ -101,10 +101,11 @@ export function ExpertiseSection({
             >
               {!showVideo ? (
                 <>
-                  <img
+                  <Image
                     src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                     alt={videoTitle}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
